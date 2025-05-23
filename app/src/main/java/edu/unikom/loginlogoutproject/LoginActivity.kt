@@ -12,10 +12,14 @@ import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
+    private lateinit var dataStoreManager: DataStoreManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        dataStoreManager = DataStoreManager(this)
 
         binding.btnLogin.setOnClickListener {
             val nama = binding.editNama.text.toString()
@@ -36,6 +40,7 @@ class LoginActivity : AppCompatActivity() {
             }
 
             lifecycleScope.launch {
+                dataStoreManager.saveUserData(nama, email, phone)
                 navigateToMain()
             }
         }
